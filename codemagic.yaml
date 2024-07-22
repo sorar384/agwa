@@ -37,10 +37,6 @@ workflows:
           storeFile=${CM_KEYSTORE_PATH//\\//}
           EOF
 
-
-      - name: Build apk
-        script: flutter build apk --release --verbose
-
       - name: Build ios
         script: flutter build ios --release
 
