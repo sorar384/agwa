@@ -17,12 +17,13 @@ workflows:
         ndk: r21d
         java: 1.8
         ruby: 2.7.2
-      cache:
-        cache_paths:
-          - $HOME/.gradle/caches
-          - $FLUTTER_ROOT/.pub-cache
-          - $HOME/Library/Caches/CocoaPods
-          - $CM_BUILD_DIR/node_modules
+
+    cache:
+      cache_paths:
+        - $HOME/.gradle/caches
+        - $FLUTTER_ROOT/.pub-cache
+        - $HOME/Library/Caches/CocoaPods
+        - $CM_BUILD_DIR/node_modules
 
     scripts:
       - name: Get Flutter Packages
