@@ -1,0 +1,14 @@
+workflows:
+  ios-workflow:
+    name: iOS Workflow
+    environment:
+      xcode: latest
+    scripts:
+      - name: Install dependencies
+        script: |
+          brew install cocoapods
+          pod install
+      - name: Build the app
+        script: xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -sdk iphonesimulator -configuration Release build
+    artifacts:
+      - build/ios/Release-iphonesimulator/*.app
