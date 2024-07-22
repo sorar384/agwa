@@ -25,6 +25,15 @@ workflows:
       - name: Get Flutter Packages
         script: flutter packages pub get
 
+      - name: Install CocoaPods dependencies
+        script: |
+          echo "Updating Homebrew..."
+          brew update || true
+          echo "Installing CocoaPods..."
+          brew install cocoapods || brew upgrade cocoapods
+          echo "Running pod install..."
+          cd ios && pod install --verbose
+
       - name: Build ios
         script: flutter build ios --release
 
