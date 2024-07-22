@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "714314647333",
+    "firebase_url": "https://group10-appdev-default-rtdb.firebaseio.com",
+    "project_id": "group10-appdev",
+    "storage_bucket": "group10-appdev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:714314647333:android:a9a071307cf91f5fcebccc",
+        "android_client_info": {
+          "package_name": "com.example.agwa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUZcDuHMdchrfDSGHnEI1iKOxNzzXy4Lg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
