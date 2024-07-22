@@ -11,7 +11,7 @@ workflows:
           echo "Installing CocoaPods..."
           brew install cocoapods || brew upgrade cocoapods
           echo "Running pod install..."
-          pod install
+          pod install --verbose
       - name: Build the app
         script: |
           echo "Building the app..."
