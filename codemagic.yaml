@@ -1,20 +1,69 @@
 workflows:
-  ios-workflow:
-    name: iOS Workflow
+  hello-world:
+    name: Hello world workflow
+    instance_type: mac_pro
+    max_build_duration: 100
     environment:
-      xcode: latest
+      groups:
+        - keystore_credentials
+        - app_store_credentials
+      vars:
+        GOOGLE_PLAY_TRACK: "beta"
+        flutter: stable
+        xcode: latest
+        cocoapods: 1.9.1
+        node: 12.14.0
+        npm: 6.13.7
+        ndk: r21d
+        java: 1.8
+        ruby: 2.7.2
+      cache:
+        cache_paths:
+          - $HOME/.gradle/caches
+          - $FLUTTER_ROOT/.pub-cache
+          - $HOME/Library/Caches/CocoaPods
+          - $CM_BUILD_DIR/node_modules
+
     scripts:
-      - name: Install dependencies
+      - name: Get Flutter Packages
+        script: flutter packages pub get
+
+      - name: Set up key properties
         script: |
-          echo "Updating Homebrew..."
-          brew update || true
-          echo "Installing CocoaPods..."
-          brew install cocoapods || brew upgrade cocoapods
-          echo "Running pod install..."
-          pod install --verbose
-      - name: Build the app
-        script: |
-          echo "Building the app..."
-          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -sdk iphonesimulator -configuration Release build
+          cat >> "$CM_BUILD_DIR/android/key.properties" <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=$CM_KEYSTORE_PATH
+          EOF
+
+      - name: Build apk
+        script: flutter build apk --release
+
+      - name: Build ios
+        script: flutter build ios
+
     artifacts:
-      - build/ios/Release-iphonesimulator/*.app
+      - build/**/outputs/apk/**/*.apk
+      - build/**/outputs/**/*.aab
+
+    publishing:
+      email:
+        recipients:
+          - mohammed@nevercode.io
+          - kevin@nevercode.io
+
+    triggering:
+      events:
+        - push
+        - pull_request
+        - tag
+      branch_patterns:
+        - pattern: "*"
+          include: true
+        - pattern: develop
+          include: false
+        - pattern: feature-1
+          include: true
+        - pattern: main
+          include: true
